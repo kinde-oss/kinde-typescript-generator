@@ -1,63 +1,101 @@
-import { OAuth2Client, OAuth2Token, OAuth2AuthorizationCodeGrant, OAuth2ClientCredentialsGrant } from '@badgateway/oauth2-client';
-import { Configuration } from './index';
+import { OAuth2Client, OAuth2Token, generateCodeVerifier } from "@badgateway/oauth2-client";
+import { Configuration } from "./index"; 
+import * as crypto from 'crypto';
 
-enum GrantType {
-  AUTH_CODE = 'AUTH_CODE',
-  CLIENT_CREDENTIALS = 'CLIENT_CREDENTIALS',
+function generateRandomString(length: number): string {
+  const randomBytes = crypto.randomBytes(Math.ceil(length / 2));
+  const randomHexString = randomBytes.toString('hex');
+  return randomHexString.slice(0, length);
 }
 
-// Set your global enum value
-const grantType: GrantType = GrantType.AUTH_CODE; // or GrantType.CLIENT_CREDENTIALS
+export class KindeAuthClient {
+  private oauth2Client: OAuth2Client;
+  private state: string;
+  private codeVerifier: string;
+  private redirectUri: string;
+  private scopes: string[];
+  private tokens: OAuth2Token;
 
-// OAuth2 configuration
-const oauth2Config = {
-  clientId: {process.env.REACT_APP_KINDE_CLIENT_ID},
-  clientSecret: 'your_client_secret',
-  tokenEndpoint: 'https://your-auth-server.com/oauth/token',
-  authorizationEndpoint: 'https://your-auth-server.com/oauth/authorize',
-  redirectUri: 'https://your-callback-url.com/callback',
-  scopes: ['your_scope1', 'your_scope2'],
-  audience: 'your_optional_audience', // If required
-};
+  constructor(
+    kindeDomain: string,
+    clientId: string,
+    redirectUri: string,
+    scopes: string[] = ["openid", "profile", "email", "offline"],
+    audience?: string,
+  ) {
+    // OAuth2 configuration
+    const oauth2Config = {
+      server: kindeDomain,
+      clientId: clientId,
+      tokenEndpoint: `${kindeDomain}/oauth2/token`,
+      authorizationEndpoint: `${kindeDomain}/oauth2/auth`,
+      redirectUri: redirectUri,
+      scopes: scopes,
+      audience:audience,
+    };
 
-const oauth2Client = new OAuth2Client(oauth2Config);
+    this.oauth2Client = new OAuth2Client(oauth2Config);
+    this.state = generateRandomString(32);
+    this.redirectUri = redirectUri;
+    this.scopes = scopes;
+  }
 
-const fetchAccessToken = async (): Promise<string> => {
-  try {
-    let token: OAuth2Token;
+  public async login(): Promise<string> {
+    this.codeVerifier = await generateCodeVerifier();
+    const authUrl = await this.oauth2Client.authorizationCode.getAuthorizeUri({
+      redirectUri: this.redirectUri,
+      state: this.state,
+      codeVerifier: this.codeVerifier,
+      scope: this.scopes,
+    });
 
-    if (grantType === GrantType.AUTH_CODE) {
-      // Assuming you have the authorization code from the user's authorization
-      const authCode = 'your_authorization_code_here';
+    return authUrl;
+  }
 
-      // Use the authorization_code grant to get the access token
-      const grant = new OAuth2AuthorizationCodeGrant(oauth2Client, {
-        code: authCode,
-        redirect_uri: oauth2Config.redirectUri,
-      });
+  public async handleLoginCallback(callbackUrl: string) {
+    console.log( "Log in callback handled!");
+    this.tokens = await this.oauth2Client.authorizationCode.getTokenFromCodeRedirect(
+      callbackUrl,
+      {
+        redirectUri: this.redirectUri,
+        state: this.state,
+        codeVerifier: this.codeVerifier,
+      }
+    );
+  }
 
-      token = await grant.getToken();
+  public async getAccessToken(): Promise<string> {
+    return this.tokens.accessToken;
+  }
+}
 
-    } else if (grantType === GrantType.CLIENT_CREDENTIALS) {
-      // Use the client_credentials grant to get the access token
-      const grant = new OAuth2ClientCredentialsGrant(oauth2Client, {
-        scope: oauth2Config.scopes.join(' '),
-      });
-      token = await grant.getToken();
+export class KindeMgmtApiClient  {
+  private oauth2Client: OAuth2Client;
+  private tokens: OAuth2Token;
 
-    } else {
-      throw new Error('Unsupported grant type');
-    }
+  constructor(
+    kindeDomain: string,
+    clientId: string,
+    clientSecret: string,
+    audience?: string,
+  ) {
 
-    return token.access_token;
+    const oauth2Config = {
+      server: kindeDomain,
+      clientId: clientId,
+      clientSecret: clientSecret,
+      tokenEndpoint: `${kindeDomain}/oauth2/token`,
+      audience:audience,
+    };
 
-  } catch (error) {
-    console.error('Error fetching access token:', error);
-    throw error;
+    this.oauth2Client = new OAuth2Client(oauth2Config);
+  }
+
+  public async login() {
+    this.tokens = await this.oauth2Client.clientCredentials();
+  }
+
+  public async getAccessToken(): Promise<string> {
+    return this.tokens.accessToken;
   }
 };
-
-const configuration = new Configuration({
-  basePath: 'https://your-api-base-url.com',
-  accessToken: fetchAccessToken,
-});
