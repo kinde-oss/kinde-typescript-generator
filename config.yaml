@@ -1,0 +1,8 @@
+templateDir: /local
+additionalProperties:
+  artifactId: test-typescript-sdk
+files:
+  additional/client.ts:
+    destinationFilename: client/client.ts
+  additional/.env:
+    destinationFilename: .env
