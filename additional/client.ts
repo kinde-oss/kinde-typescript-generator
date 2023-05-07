@@ -1,5 +1,4 @@
 import { OAuth2Client, OAuth2Token, generateCodeVerifier } from "@badgateway/oauth2-client";
-import { Configuration } from "./index"; 
 import * as crypto from 'crypto';
 
 function generateRandomString(length: number): string {
