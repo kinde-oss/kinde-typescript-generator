@@ -2,15 +2,10 @@
   "name": "@kinde-oss/kinde-typescript-sdk",
   "version": "1.0.0",
   "description": "Kinde typescript SDK",
-  "module": "dist/kinde-auth-pkce-js.esm.js",
-  "main": "dist/kinde-auth-pkce-js.umd.min.js",
+  "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "type": "module",
   "scripts": {
-    "build": "genversion --es6 src/utils/version.js && rollup -c",
-    "test": "jest",
-    "watch": "rollup -c -w",
-    "prepare": "husky install"
+    "build": "tsc"
   },
   "author": {
     "name": "Kinde",
@@ -19,15 +14,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/kinde-oss/kinde-auth-pkce-js"
+    "url": "https://github.com/kinde-oss/kinde-typescript-sdk"
   },
-  "bugs": "https://github.com/kinde-oss/kinde-auth-pkce-js",
+  "bugs": "https://github.com/kinde-oss/kinde-typescript-sdk",
   "homepage": "https://kinde.com",
   "license": "MIT",
   "dependencies": {
     "@badgateway/oauth2-client": "^2.2.0"
   },
   "devDependencies": {
-    "@types/node": "^20.1.0"
+    "@types/node": "^20.1.0",
+    "typescript": "^4.5.5"
   }
 }

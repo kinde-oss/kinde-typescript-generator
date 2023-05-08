@@ -4,3 +4,7 @@ additionalProperties:
 files:
   /local/additional/client.ts:
     destinationFilename: /local/generated-sdk/client/client.ts
+  /local/additional/package.json:
+    destinationFilename: /local/generated-sdk/package.json
+  /local/additional/tsconfig.json:
+    destinationFilename: /local/generated-sdk/tsconfig.json

@@ -1,8 +1,16 @@
 {
-    "compilerOptions": {
-      // ... other options ...
-        "types": ["node"]
-    },
-    // ... other configurations ...
-  }
-  
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "declaration": true,
+    "outDir": "./dist",
+    "strict": true,
+    "esModuleInterop": true
+  },
+  "include": [
+    "./**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

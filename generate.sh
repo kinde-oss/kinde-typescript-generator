@@ -8,3 +8,5 @@ docker run --rm -v $(PWD):/local   \
     openapitools/openapi-generator-cli generate \
     -i /local/kinde-mgmt-api-specs.yaml -c /local/config.yaml -g typescript-fetch \
     -o /local/generated-sdk
+
+rm -rf ./generated-sdk/.openapi-generator ./generated-sdk/.openapi-generator-ignore

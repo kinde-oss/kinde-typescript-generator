@@ -37,6 +37,12 @@ export class KindeAuthClient {
     this.state = generateRandomString(32);
     this.redirectUri = redirectUri;
     this.scopes = scopes;
+    this.codeVerifier = "";
+    this.tokens = {
+      accessToken: "",
+      expiresAt: 1000,
+      refreshToken: ""
+    }
   }
 
   public async login(): Promise<string> {
@@ -71,12 +77,13 @@ export class KindeAuthClient {
 export class KindeMgmtApiClient  {
   private oauth2Client: OAuth2Client;
   private tokens: OAuth2Token;
+  private audience: string
 
   constructor(
     kindeDomain: string,
     clientId: string,
     clientSecret: string,
-    audience?: string,
+    audience: string,
   ) {
 
     const oauth2Config = {
@@ -84,14 +91,24 @@ export class KindeMgmtApiClient  {
       clientId: clientId,
       clientSecret: clientSecret,
       tokenEndpoint: `${kindeDomain}/oauth2/token`,
-      audience:audience,
+      audience: audience,
     };
 
     this.oauth2Client = new OAuth2Client(oauth2Config);
+    this.tokens = {
+      accessToken: "",
+      expiresAt: 1000,
+      refreshToken: ""
+    }
+    this.audience = audience;
   }
 
   public async login() {
-    this.tokens = await this.oauth2Client.clientCredentials();
+    this.tokens = await this.oauth2Client.clientCredentials({
+      extraParams: {
+        audience: this.audience,
+      },
+    });
   }
 
   public async getAccessToken(): Promise<string> {
