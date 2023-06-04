@@ -9,7 +9,7 @@ curl https://kinde.com/api/kinde-mgmt-api-specs.yaml \
 docker run --rm -v $PWD:/local \
     openapitools/openapi-generator-cli generate \
     -i /local/kinde-mgmt-api-specs.yaml \
-    -c /local/config.yaml -g typescript-fetch \
+    -c /local/generator-config.yaml -g typescript-fetch \
     -o /local/generated-sdk
 
 # making sdk-version.sh script executable
