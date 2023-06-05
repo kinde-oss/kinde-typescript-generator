@@ -17,6 +17,7 @@ chmod +x generated-sdk/sdk-version.sh
 
 # moving apis, models, runtime.ts to lib directory
 mkdir -p ./generated-sdk/lib 
+mv ./generated-sdk/index.ts ./generated-sdk/lib/index.ts
 mv ./generated-sdk/runtime.ts ./generated-sdk/lib
 mv ./generated-sdk/models ./generated-sdk/lib
 mv ./generated-sdk/apis ./generated-sdk/lib 
