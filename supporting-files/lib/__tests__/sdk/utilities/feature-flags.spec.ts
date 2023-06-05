@@ -13,6 +13,7 @@ describe('feature-flags', () => {
   beforeEach(() => {
     mockAccessToken = mocks.getMockAccessToken();
     memoryStore.setItem('access_token_payload', mockAccessToken.payload);
+    memoryStore.setItem('access_token', mockAccessToken.token);
   });
 
   afterEach(() => {
@@ -36,11 +37,21 @@ describe('feature-flags', () => {
       const flag = featureFlags[code];
       expect(() => getFlag(code, true, 's')).toThrowError(
         new Error(
-          `Flag ${code} is of type ${FlagDataType[flag!.t]}, expected type ${
+          `Flag ${code} is of type ${FlagDataType[flag!.t]}, expected type is ${
             FlagDataType.s
           }`
         )
       );
+    });
+
+    it('provide result contains no type if default-value is used', () => {
+      const defaultValue = 'default-value';
+      const code = 'non-existant-code';
+      expect(getFlag(code, defaultValue)).toStrictEqual({
+        value: defaultValue,
+        is_default: true,
+        code,
+      });
     });
 
     it('retrieves flag data for a defined feature flag', () => {

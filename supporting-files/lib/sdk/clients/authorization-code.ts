@@ -1,15 +1,20 @@
-import type { PKCEClientOptions, AuthURLOptions } from '../oauth2-flows/types';
-import { AuthCodeWithPKCE, AuthorizationCode } from '../oauth2-flows';
+import { type AuthURLOptions } from '../oauth2-flows/types';
 import { sessionStore, memoryStore } from '../stores';
 import type { UserType } from '../utilities';
 import * as utilities from '../utilities';
 
+import {
+  type AuthorizationCodeOptions,
+  AuthCodeWithPKCE,
+  AuthorizationCode,
+} from '../oauth2-flows';
+
 const createAuthorizationCodeClient = (
-  options: PKCEClientOptions,
+  options: AuthorizationCodeOptions & { clientSecret?: string },
   isPKCE: boolean
 ) => {
   const client = !isPKCE
-    ? new AuthorizationCode(options)
+    ? new AuthorizationCode(options, options.clientSecret!)
     : new AuthCodeWithPKCE(options);
 
   const login = async (options?: AuthURLOptions) => {
@@ -31,10 +36,6 @@ const createAuthorizationCodeClient = (
     });
   };
 
-  const getUserProfile = async (): Promise<UserType> => {
-    return await client.getUserProfile();
-  };
-
   const handleRedirectToApp = async (callbackURL: URL) => {
     await client.handleRedirectFromAuthDomain(callbackURL);
   };
@@ -44,12 +45,26 @@ const createAuthorizationCodeClient = (
     return !utilities.isTokenExpired(accessToken);
   };
 
-  const getToken = async (): Promise<string> => {
-    return await client.getToken();
+  const getUserProfile = async (): Promise<UserType> => {
+    if (!isAuthenticated()) {
+      throw new Error(
+        'Cannot fetch user profile, no authentication credential found'
+      );
+    }
+    return await client.getUserProfile();
   };
 
   const getUser = () => {
-    return utilities.getUserFromMemory();
+    if (!isAuthenticated()) {
+      throw new Error(
+        'Cannot get user details, no authentication credential found'
+      );
+    }
+    return utilities.getUserFromMemory()!;
+  };
+
+  const getToken = async (): Promise<string> => {
+    return await client.getToken();
   };
 
   const logout = () => {
