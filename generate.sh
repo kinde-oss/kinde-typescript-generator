@@ -1,19 +1,27 @@
 #!/bin/bash
 
+# getting businessName as a script argument
+if [[ $# -ge 1 ]]; then business_name=$1; fi
+
 # fetching latest open-api specification
-rm -rf ./generated-sdk && rm -f ./kinde-mgmt-api-specs.yaml
-curl https://kinde.com/api/kinde-mgmt-api-specs.yaml \
-  -o kinde-mgmt-api-specs.yaml
+openapi_spec_file=kinde-mgmt-api-specs.yaml
+rm -rf ./generated-sdk && rm -f $openapi_spec_file
+curl https://kinde.com/api/$openapi_spec_file \
+  -o $openapi_spec_file
+
+# replacing business name in script argument
+[[ -v business_name ]] && \
+  sed -i s/\{businessName\}/$business_name/g $openapi_spec_file
 
 # generating sdk
 docker run --rm -v $PWD:/local \
     openapitools/openapi-generator-cli generate \
-    -i /local/kinde-mgmt-api-specs.yaml \
+    -i /local/$openapi_spec_file \
     -c /local/generator-config.yaml -g typescript-fetch \
     -o /local/generated-sdk
 
 # making sdk-version.sh script executable
-chmod +x generated-sdk/sdk-version.sh
+chmod +x ./generated-sdk/sdk-version.sh
 
 # moving apis, models, runtime.ts to lib directory
 mkdir -p ./generated-sdk/lib 

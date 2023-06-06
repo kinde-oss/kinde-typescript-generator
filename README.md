@@ -20,6 +20,13 @@ option. The generator then appends the files listed in the `supporting-files`
 directory to the final generated SDK. The generated SDK is placed in a directory 
 called `generated-sdk`.
 
+The script also takes an optional argument which replaces the {businessName} variable 
+in the `kinde-mgmt-api-specs.yaml` specification file, if provided.
+
+```bash
+./generate.sh my-business-name
+```
+
 ## Using the generated SDK
 To use the generated SDK, you will require the `pnpm` package manager with which you 
 can build and package it by running the following commands, in the `generated-sdk`
