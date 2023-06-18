@@ -14,8 +14,8 @@ files:
     destinationFilename: /local/generated-sdk/tsconfig.cjs.json
   /local/supporting-files/jest.config.json:
     destinationFilename: /local/generated-sdk/jest.config.json
-  /local/supporting-files/sdk-version.sh:
-    destinationFilename: /local/generated-sdk/sdk-version.sh
+  /local/supporting-files/sdk-version.js:
+    destinationFilename: /local/generated-sdk/sdk-version.js
 
   /local/supporting-files/lib/sdk/index.ts:
     folder: lib/sdk
@@ -23,9 +23,9 @@ files:
   /local/supporting-files/lib/sdk/environment.ts:
     folder: lib/sdk
     destinationFilename: /local/generated-sdk/lib/sdk/environment.ts
-  /local/supporting-files/lib/sdk/sdk-version.ts:
+  /local/supporting-files/lib/sdk/version.ts:
     folder: lib/sdk
-    destinationFilename: /local/generated-sdk/lib/sdk/sdk-version.ts
+    destinationFilename: /local/generated-sdk/lib/sdk/version.ts
 
   /local/supporting-files/lib/sdk/oauth2-flows/index.ts:
     folder: lib/sdk/oauth2-flows

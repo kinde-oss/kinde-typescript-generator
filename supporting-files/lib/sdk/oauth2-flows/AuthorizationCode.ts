@@ -1,7 +1,7 @@
 import { isNodeEnvironment } from '../environment';
-import { getSDKHeader } from '../sdk-version';
 import type { UserType } from '../utilities';
 import * as utilities from '../utilities';
+import { getSDKHeader } from '../version';
 import { sessionStore } from '../stores';
 
 import type {
@@ -153,7 +153,6 @@ export class AuthorizationCode {
     return new URLSearchParams({
       state: this.state!,
       client_id: this.config.clientId,
-      scope: AuthorizationCode.DEFAULT_TOKEN_SCOPES,
       redirect_uri: this.config.redirectURL,
       response_type: 'code',
     });
@@ -163,21 +162,26 @@ export class AuthorizationCode {
     options: AuthURLOptions = {}
   ): URLSearchParams {
     const searchParams = this.getBaseAuthURLParams();
+    searchParams.append(
+      'scope',
+      this.config.scope ?? AuthorizationCode.DEFAULT_TOKEN_SCOPES
+    );
+
+    if (this.config.audience !== undefined) {
+      searchParams.append('audience', this.config.audience);
+    }
+
     if (options.start_page !== undefined) {
       searchParams.append('start_page', options.start_page);
+    }
+
+    if (options.org_code !== undefined) {
+      searchParams.append('org_code', options.org_code);
     }
 
     if (options.is_create_org !== undefined) {
       searchParams.append('org_name', options.org_name ?? '');
       searchParams.append('is_create_org', 'true');
-    }
-
-    if (options.audience !== undefined) {
-      searchParams.append('audience', options.audience);
-    }
-
-    if (options.scope !== undefined) {
-      searchParams.append('scope', options.scope);
     }
 
     return searchParams;
