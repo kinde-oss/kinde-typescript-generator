@@ -1,14 +1,35 @@
 #!/bin/bash
 
-# Get latest API spec
-rm -f ./kinde-mgmt-api-specs.yaml
-curl https://kinde.com/api/kinde-mgmt-api-specs.yaml -o kinde-mgmt-api-specs.yaml
+# getting businessName as a script argument
+if [[ $# -ge 1 ]]; then business_name=$1; fi
 
-# Generate SDK
-docker run --rm -v $(PWD):/local   \
+# fetching latest open-api specification
+openapi_spec_file=kinde-mgmt-api-specs.yaml
+rm -rf ./generated-sdk && rm -f $openapi_spec_file
+curl https://kinde.com/api/$openapi_spec_file \
+  -o $openapi_spec_file
+
+# replacing business name in script argument
+[[ -v business_name ]] && \
+  sed -i s/\{businessName\}/$business_name/g $openapi_spec_file
+
+# generating sdk
+docker run --rm -v $PWD:/local \
     openapitools/openapi-generator-cli generate \
-    -i /local/kinde-mgmt-api-specs.yaml -c /local/config.yaml -g typescript-fetch \
+    -i /local/$openapi_spec_file \
+    -c /local/generator-config.yaml -g typescript-fetch \
     -o /local/generated-sdk
 
-# Clean up API files from SDK
-rm -rf ./generated-sdk/.openapi-generator ./generated-sdk/.openapi-generator-ignore
+# making sdk-version.sh script executable
+chmod +x ./generated-sdk/sdk-version.sh
+
+# moving apis, models, runtime.ts to lib directory
+mkdir -p ./generated-sdk/lib 
+mv ./generated-sdk/index.ts ./generated-sdk/lib/index.ts
+mv ./generated-sdk/runtime.ts ./generated-sdk/lib
+mv ./generated-sdk/models ./generated-sdk/lib
+mv ./generated-sdk/apis ./generated-sdk/lib 
+
+# clean up api files from sdk
+rm -rf ./generated-sdk/.openapi-generator 
+rm -rf ./generated-sdk/.openapi-generator-ignore
