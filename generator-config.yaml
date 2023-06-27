@@ -14,8 +14,8 @@ files:
     destinationFilename: /local/generated-sdk/tsconfig.cjs.json
   /local/supporting-files/jest.config.json:
     destinationFilename: /local/generated-sdk/jest.config.json
-  /local/supporting-files/sdk-version.sh:
-    destinationFilename: /local/generated-sdk/sdk-version.sh
+  /local/supporting-files/sdk-version.js:
+    destinationFilename: /local/generated-sdk/sdk-version.js
 
   /local/supporting-files/lib/sdk/index.ts:
     folder: lib/sdk
@@ -23,13 +23,16 @@ files:
   /local/supporting-files/lib/sdk/environment.ts:
     folder: lib/sdk
     destinationFilename: /local/generated-sdk/lib/sdk/environment.ts
-  /local/supporting-files/lib/sdk/sdk-version.ts:
+  /local/supporting-files/lib/sdk/version.ts:
     folder: lib/sdk
-    destinationFilename: /local/generated-sdk/lib/sdk/sdk-version.ts
+    destinationFilename: /local/generated-sdk/lib/sdk/version.ts
 
   /local/supporting-files/lib/sdk/oauth2-flows/index.ts:
     folder: lib/sdk/oauth2-flows
     destinationFilename: /local/generated-sdk/lib/sdk/oauth2-flows/index.ts
+  /local/supporting-files/lib/sdk/oauth2-flows/AuthCodeAbstract.ts:
+    folder: lib/sdk/oauth2-flows
+    destinationFilename: /local/generated-sdk/lib/sdk/oauth2-flows/AuthCodeAbstract.ts
   /local/supporting-files/lib/sdk/oauth2-flows/AuthorizationCode.ts:
     folder: lib/sdk/oauth2-flows
     destinationFilename: /local/generated-sdk/lib/sdk/oauth2-flows/AuthorizationCode.ts
@@ -46,28 +49,34 @@ files:
   /local/supporting-files/lib/sdk/clients/index.ts:
     folder: lib/sdk/clients
     destinationFilename: /local/generated-sdk/lib/sdk/clients/index.ts
-  /local/supporting-files/lib/sdk/clients/authorization-code.ts:
+  /local/supporting-files/lib/sdk/clients/server/index.ts:
     folder: lib/sdk/clients
-    destinationFilename: /local/generated-sdk/lib/sdk/clients/authorization-code.ts
-  /local/supporting-files/lib/sdk/clients/client-credentials.ts:
+    destinationFilename: /local/generated-sdk/lib/sdk/clients/server/index.ts
+  /local/supporting-files/lib/sdk/clients/server/authorization-code.ts:
     folder: lib/sdk/clients
-    destinationFilename: /local/generated-sdk/lib/sdk/clients/client-credentials.ts
+    destinationFilename: /local/generated-sdk/lib/sdk/clients/server/authorization-code.ts
+  /local/supporting-files/lib/sdk/clients/server/client-credentials.ts:
+    folder: lib/sdk/clients
+    destinationFilename: /local/generated-sdk/lib/sdk/clients/server/client-credentials.ts
+  /local/supporting-files/lib/sdk/clients/browser/index.ts:
+    folder: lib/sdk/clients
+    destinationFilename: /local/generated-sdk/lib/sdk/clients/browser/index.ts
+  /local/supporting-files/lib/sdk/clients/browser/authcode-with-pkce.ts:
+    folder: lib/sdk/clients
+    destinationFilename: /local/generated-sdk/lib/sdk/clients/browser/authcode-with-pkce.ts
   /local/supporting-files/lib/sdk/clients/types.ts:
     folder: lib/sdk/clients
     destinationFilename: /local/generated-sdk/lib/sdk/clients/types.ts
 
-  /local/supporting-files/lib/sdk/stores/index.ts:
-    folder: lib/sdk/stores
-    destinationFilename: /local/generated-sdk/lib/sdk/stores/index.ts
-  /local/supporting-files/lib/sdk/stores/MemoryStore.ts:
-    folder: lib/sdk/stores
-    destinationFilename: /local/generated-sdk/lib/sdk/stores/MemoryStore.ts
-  /local/supporting-files/lib/sdk/stores/BrowserSessionStore.ts:
-    folder: lib/sdk/stores
-    destinationFilename: /local/generated-sdk/lib/sdk/stores/BrowserSessionStore.ts
-  /local/supporting-files/lib/sdk/stores/types.ts:
-    folder: lib/sdk/stores
-    destinationFilename: /local/generated-sdk/lib/sdk/stores/types.ts
+  /local/supporting-files/lib/sdk/session-managers/index.ts:
+    folder: lib/sdk/session-managers
+    destinationFilename: /local/generated-sdk/lib/sdk/session-managers/index.ts
+  /local/supporting-files/lib/sdk/session-managers/BrowserSessionManager.ts:
+    folder: lib/sdk/session-managers
+    destinationFilename: /local/generated-sdk/lib/sdk/session-managers/BrowserSessionManager.ts
+  /local/supporting-files/lib/sdk/session-managers/types.ts:
+    folder: lib/sdk/session-managers
+    destinationFilename: /local/generated-sdk/lib/sdk/session-managers/types.ts
 
   /local/supporting-files/lib/sdk/utilities/index.ts:
     folder: lib/sdk/utilities
@@ -102,16 +111,7 @@ files:
     destinationFilename: /local/generated-sdk/lib/__tests__/sdk/oauth2-flows/AuthCodeWithPKCE.spec.ts
   /local/supporting-files/lib/__tests__/sdk/oauth2-flows/ClientCredentials.spec.ts:
     folder: lib/__tests__/sdk/oauth2-flows
-    destinationFilename: /local/generated-sdk/lib/__tests__/sdk/stores/ClientCredentials.spec.ts
-  /local/supporting-files/lib/__tests__/sdk/stores/stores.spec.ts:
-    folder: lib/__tests__/sdk/stores
-    destinationFilename: /local/generated-sdk/lib/__tests__/sdk/stores/stores.spec.ts
-  /local/supporting-files/lib/__tests__/sdk/stores/stores.browser.spec.ts:
-    folder: lib/__tests__/sdk/stores
-    destinationFilename: /local/generated-sdk/lib/__tests__/sdk/stores/stores.browser.spec.ts
-  /local/supporting-files/lib/__tests__/sdk/stores/BrowserSessionStore.browser.spec.ts:
-    folder: lib/__tests__/sdk/stores
-    destinationFilename: /local/generated-sdk/lib/__tests__/sdk/stores/BrowserSessionStore.browser.spec.ts
+    destinationFilename: /local/generated-sdk/lib/__tests__/sdk/oauth2-flows/ClientCredentials.spec.ts
   /local/supporting-files/lib/__tests__/sdk/utilities/feature-flags.spec.ts:
     folder: lib/__tests__/sdk/utilities
     destinationFilename: /local/generated-sdk/lib/__tests__/sdk/utilities/feature-flags.spec.ts
