@@ -103,6 +103,9 @@ files:
   /local/supporting-files/lib/__tests__/mocks.ts:
     folder: lib/__tests__
     destinationFilename: /local/generated-sdk/lib/__tests__/mocks.ts
+  /local/supporting-files/lib/__tests__/sdk/session-managers/BrowserSessionManager.browser.spec.ts:
+    folder: lib/__tests__/sdk/session-managers
+    destinationFilename: /local/generated-sdk/lib/__tests__/sdk/session-managers/BrowserSessionManager.browser.spec.ts
   /local/supporting-files/lib/__tests__/sdk/oauth2-flows/AuthorizationCode.spec.ts:
     folder: lib/__tests__/sdk/oauth2-flows
     destinationFilename: /local/generated-sdk/lib/__tests__/sdk/oauth2-flows/AuthorizationCode.spec.ts
