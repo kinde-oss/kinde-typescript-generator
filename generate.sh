@@ -20,9 +20,6 @@ docker run --rm -v $PWD:/local \
     -c /local/generator-config.yaml -g typescript-fetch \
     -o /local/generated-sdk
 
-# making sdk-version.sh script executable
-chmod +x ./generated-sdk/sdk-version.sh
-
 # moving apis, models, runtime.ts to lib directory
 mkdir -p ./generated-sdk/lib 
 mv ./generated-sdk/index.ts ./generated-sdk/lib/index.ts
