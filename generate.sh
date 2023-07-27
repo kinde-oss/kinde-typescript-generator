@@ -10,8 +10,8 @@ curl https://kinde.com/api/$openapi_spec_file \
   -o $openapi_spec_file
 
 # replacing business name in script argument
-[[ -v business_name ]] && \
-  sed -i s/\{businessName\}/$business_name/g $openapi_spec_file
+[[ -z ${business_name} ]] || \
+  sed -i '' s/\{businessName\}/$business_name/g $openapi_spec_file
 
 # generating sdk
 docker run --rm -v $PWD:/local \
