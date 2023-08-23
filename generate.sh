@@ -14,7 +14,7 @@ curl https://kinde.com/api/$openapi_spec_file \
   sed -i '' s/\{businessName\}/$business_name/g $openapi_spec_file
 
 # generating sdk
-docker run --rm -v $PWD:/local \
+docker run --rm -v $PWD:/local -u $(id -u) \
     openapitools/openapi-generator-cli generate \
     -i /local/$openapi_spec_file \
     -c /local/generator-config.yaml -g typescript-fetch \
