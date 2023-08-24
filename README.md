@@ -44,6 +44,10 @@ in the `kinde-mgmt-api-specs.yaml` specification file, if provided.
 ./generate.sh my-business-name
 ```
 
+Please also note that above script runs the `openapi-generator-cli` docker image as 
+the currently logged in user, therefore it is essential that this user be added to
+the `docker` group on your system.
+
 ## Using the generated SDK
 To use the generated SDK, you will require the `pnpm` package manager with which you 
 can build and package it by running the following commands, in the `generated-sdk`
