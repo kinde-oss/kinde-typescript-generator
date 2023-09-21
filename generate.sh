@@ -18,7 +18,8 @@ docker run --rm -v $PWD:/local -u $(id -u) \
     openapitools/openapi-generator-cli generate \
     -i /local/$openapi_spec_file \
     -c /local/generator-config.yaml -g typescript-fetch \
-    -o /local/generated-sdk
+    -o /local/generated-sdk \
+    --additional-properties=importFileExtension=.js
 
 # moving apis, models, runtime.ts to lib directory
 mkdir -p ./generated-sdk/lib 
