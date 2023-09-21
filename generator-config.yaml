@@ -6,6 +6,10 @@ files:
     destinationFilename: /local/generated-sdk/README.md
   /local/supporting-files/package.json:
     destinationFilename: /local/generated-sdk/package.json
+  /local/supporting-files/package-cjs.json:
+    destinationFilename: /local/generated-sdk/package-cjs.json
+  /local/supporting-files/package-esm.json:
+    destinationFilename: /local/generated-sdk/package-esm.json
   /local/supporting-files/pnpm-lock.yaml:
     destinationFilename: /local/generated-sdk/pnpm-lock.yaml
   /local/supporting-files/tsconfig.json:
