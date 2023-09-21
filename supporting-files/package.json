@@ -4,15 +4,21 @@
   "description": "Kinde Typescript SDK",
   "main": "dist-cjs/index.js",
   "module": "dist/index.js",
-  "types": "dist/types",
+  "types": "dist/types/index.d.ts",
   "files": [
     "dist",
     "dist-cjs"
   ],
   "exports": {
     ".": {
-      "require": "./dist-cjs/index.js",
-      "import": "./dist/index.js"
+      "require": {
+        "types": "./dist-cjs/types/index.d.ts",
+        "default": "./dist-cjs/index.js"
+      },
+      "import":{
+        "types": "./dist/types/index.d.ts",
+        "default": "./dist/index.js"
+      }
     }
   },
   "scripts": {
