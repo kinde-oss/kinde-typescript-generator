@@ -1,12 +1,12 @@
-import { type SessionManager } from '../session-managers';
-import * as utilities from '../utilities';
-import { getSDKHeader } from '../version';
+import { type SessionManager } from '../session-managers/index.js';
+import * as utilities from '../utilities/index.js';
+import { getSDKHeader } from '../version.js';
 
 import type {
   OAuth2CCTokenErrorResponse,
   ClientCredentialsOptions,
   OAuth2CCTokenResponse,
-} from './types';
+} from './types.js';
 
 /**
  * Class provides implementation for the client credentials OAuth2.0 flow.
@@ -83,6 +83,24 @@ export class ClientCredentials {
     }
 
     return payload as OAuth2CCTokenResponse;
+  }
+
+  /**
+   * Method returns a boolean indicating if the access token in session is expired
+   * or not, in the event the token is expired it makes use of the `getToken` method
+   * above to first refresh it, in the event refresh fails false is returned.
+   * @param sessionManager
+   * @returns {Promise<boolean>}
+   */
+  public async isAuthenticated(
+    sessionManager: SessionManager
+  ): Promise<boolean> {
+    try {
+      await this.getToken(sessionManager);
+      return true;
+    } catch (error) {
+      return false;
+    }
   }
 
   /**

@@ -58,6 +58,9 @@ files:
   /local/supporting-files/lib/sdk/clients/server/client-credentials.ts:
     folder: lib/sdk/clients
     destinationFilename: /local/generated-sdk/lib/sdk/clients/server/client-credentials.ts
+  /local/supporting-files/lib/sdk/clients/server/with-auth-utilities.ts:
+    folder: lib/sdk/clients
+    destinationFilename: /local/generated-sdk/lib/sdk/clients/server/with-auth-utilities.ts
   /local/supporting-files/lib/sdk/clients/browser/index.ts:
     folder: lib/sdk/clients
     destinationFilename: /local/generated-sdk/lib/sdk/clients/browser/index.ts

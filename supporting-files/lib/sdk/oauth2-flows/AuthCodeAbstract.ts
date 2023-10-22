@@ -1,15 +1,15 @@
-import { type SessionManager } from '../session-managers';
-import { isNodeEnvironment } from '../environment';
-import type { UserType } from '../utilities';
-import * as utilities from '../utilities';
-import { getSDKHeader } from '../version';
+import { type SessionManager } from '../session-managers/index.js';
+import { isNodeEnvironment } from '../environment.js';
+import type { UserType } from '../utilities/index.js';
+import * as utilities from '../utilities/index.js';
+import { getSDKHeader } from '../version.js';
 
 import type {
   OAuth2CodeExchangeErrorResponse,
   OAuth2CodeExchangeResponse,
   AuthorizationCodeOptions,
   AuthURLOptions,
-} from './types';
+} from './types.js';
 
 /**
  * Abstract class provides contract (methods) for classes implementing OAuth2.0 flows
@@ -261,6 +261,10 @@ export abstract class AuthCodeAbstract {
     if (options.is_create_org) {
       searchParams.append('org_name', options.org_name ?? '');
       searchParams.append('is_create_org', 'true');
+    }
+
+    if(options.post_login_redirect_url) {
+      searchParams.append('post_login_redirect_url', options.post_login_redirect_url);
     }
 
     return searchParams;

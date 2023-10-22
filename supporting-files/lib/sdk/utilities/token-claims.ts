@@ -1,6 +1,6 @@
-import { type SessionManager } from '../session-managers';
-import { isTokenExpired } from './token-utils';
-import { type ClaimTokenType } from './types';
+import { type SessionManager } from '../session-managers/index.js';
+import { isTokenExpired } from './token-utils.js';
+import { type ClaimTokenType } from './types.js';
 
 /**
  * Method extracts the provided claim from the provided token type in the
@@ -15,15 +15,6 @@ export const getClaimValue = async (
   claim: string,
   type: ClaimTokenType = 'access_token'
 ): Promise<unknown | null> => {
-  const token = (await sessionManager.getSessionItem(type as string)) as
-    | string
-    | null;
-  if (isTokenExpired(token)) {
-    throw new Error(
-      `No authentication credential found, when requesting claim ${claim}`
-    );
-  }
-
   const tokenPayload = (await sessionManager.getSessionItem(
     `${type}_payload`
   )) as Record<string, unknown>;
