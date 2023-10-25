@@ -56,6 +56,9 @@ files:
   /local/supporting-files/lib/sdk/clients/server/index.ts:
     folder: lib/sdk/clients
     destinationFilename: /local/generated-sdk/lib/sdk/clients/server/index.ts
+  /local/supporting-files/lib/sdk/clients/server/with-auth-utilities.ts:
+    folder: lib/sdk/clients
+    destinationFilename: /local/generated-sdk/lib/sdk/clients/server/with-auth-utilities.ts
   /local/supporting-files/lib/sdk/clients/server/authorization-code.ts:
     folder: lib/sdk/clients
     destinationFilename: /local/generated-sdk/lib/sdk/clients/server/authorization-code.ts
