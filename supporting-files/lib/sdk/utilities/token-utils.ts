@@ -1,4 +1,4 @@
-import { jwtDecode } from 'jwt-decode';
+import { type JwtPayload, jwtDecode } from 'jwt-decode';
 import type { TokenCollection, UserType, TokenType } from './types.js';
 import { type SessionManager } from '../session-managers/index.js';
 
@@ -14,13 +14,13 @@ const commitUserToMemoryFromToken = async (
   sessionManager: SessionManager,
   idToken: string
 ): Promise<void> => {
-  const idTokenPayload = jwtDecode(idToken);
+  const idTokenPayload = jwtDecode<UserType&JwtPayload>(idToken);
   const user: UserType = {
     family_name: idTokenPayload.family_name,
     given_name: idTokenPayload.given_name,
     picture: idTokenPayload.picture ?? null,
     email: idTokenPayload.email,
-    id: idTokenPayload.sub,
+    id: idTokenPayload.sub!,
   };
 
   await sessionManager.setSessionItem('user', user);
@@ -127,5 +127,5 @@ export const isTokenExpired = (token: string | null): boolean => {
   if (!token) return true;
   const currentUnixTime = Math.floor(Date.now() / 1000);
   const tokenPayload = jwtDecode(token);
-  return currentUnixTime >= tokenPayload.exp;
+  return currentUnixTime >= tokenPayload.exp!;
 };
