@@ -1,4 +1,4 @@
-import {jwtDecode} from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 import type { TokenCollection, UserType, TokenType } from './types.js';
 import { type SessionManager } from '../session-managers/index.js';
 
