@@ -1,3 +1,7 @@
+| :no_entry: DEPRECATED       |
+|:----------------------------|
+| This repository has been deprecated, the generator is now integrated into the [TypeScript SDK repository](https://github.com/kinde-oss/kinde-typescript-sdk).     |
+
 # Kinde TypeScript generator
 
 The generator for the [Kinde TypeScript SDK](https://github.com/kinde-oss/kinde-typescript-sdk).
