@@ -24,6 +24,9 @@ files:
   /local/supporting-files/lib/sdk/index.ts:
     folder: lib/sdk
     destinationFilename: /local/generated-sdk/lib/sdk/index.ts
+  /local/supporting-files/lib/sdk/exceptions.ts:
+    folder: lib/sdk
+    destinationFilename: /local/generated-sdk/lib/sdk/exceptions.ts
   /local/supporting-files/lib/sdk/environment.ts:
     folder: lib/sdk
     destinationFilename: /local/generated-sdk/lib/sdk/environment.ts
